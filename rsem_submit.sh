@@ -3,8 +3,8 @@
 #SBATCH --mem=20gb
 #SBATCH --time=03:00:00
 
-source ~/bin/anaconda3/etc/profile.d/conda.sh
-conda activate rsem
+#source ~/bin/anaconda3/etc/profile.d/conda.sh
+source activate rsem
 
 reference=$1
 reference_no_ext=`echo "$reference" | sed 's/\..*//g'`

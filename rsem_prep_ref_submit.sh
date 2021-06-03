@@ -2,7 +2,7 @@
 #SBATCH -p cegs
 #SBATCH --mem=30gb
 #SBATCH --time=30:00:00
-#SBATCH -t 12
+#SBATCH -c 12
 
 source ~/bin/anaconda3/etc/profile.d/conda.sh
 conda activate rsem
