@@ -1,16 +1,49 @@
 #!/bin/bash
 #SBATCH -p cegs
-#SBATCH --mem=30gb
-#SBATCH --time=30:00:00
-#SBATCH -c 12
+#SBATCH --mem=20gb
+#SBATCH --time=03:00:00
 
-source ~/bin/anaconda3/etc/profile.d/conda.sh
-conda activate rsem
+# Help message
+if [[ $1 = "-h" ]] || [[ $1 = "--help" ]] \
+|| [[ -z $1 ]]; then
+  printf "Usage: sbatch rsem_prep_ref_submit.sh \
+reference.fa \
+[--gff3/--gtf/--transcript-to-gene-map/--... \
+reference.(gff3/gtf/txt/...)]\n\n\
+Note: FASTA & annotation files must be unzipped.\n\n\
+Requires RSEM.\n\
+(https://github.com/deweylab/RSEM)\n"
+  exit 0
+fi
+
+source activate rsem
 
 reference=$1
 reference_no_ext=`echo "$reference" | sed 's/\..*//g'`
-sample_id=$2
-echo "Aligning sample $sample_id to $reference_no_ext"
+printf "Preparing reference $reference_no_ext.\n"
 
-rsem-calculate-expression --bowtie2 --sort-bam-by-coordinate -p 12 --paired-end ${sample_id}_R1.fastq.gz ${sample_id}_R2.fastq.gz $reference_no_ext $sample_id
+if [[ -z $2 ]]; then
+  printf "Treating reference FASTA $reference \
+as transcripts.\n"
+  rsem-prepare-reference --bowtie2 $reference \
+$reference_no_ext
+elif [[ -z $3 ]]; then
+  printf "Error: no annotation file provided.\n"
+  exit 1  
+else
+  transcript_extract_flag=$2
+  transcript_extract_file=$3
+  printf "Treating reference $reference as genome, \
+extracting transcripts with $transcript_extract_file.\n"
+  if [[ $transcript_extract_flag = "--gff3" ]]; then
+    rsem-prepare-reference --bowtie2 \
+$transcript_extract_flag $transcript_extract_file \
+--gff3-RNA-patterns mRNA,rRNA \
+$reference $reference_no_ext
+  else
+    rsem-prepare-reference --bowtie2 \
+$transcript_extract_flag $transcript_extract_file \
+$reference $reference_no_ext
+  fi
+fi
 
