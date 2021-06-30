@@ -18,7 +18,7 @@ a compatible samples file:
 
 ## 2. Prepare reference for RSEM
  
-`sbatch rsem_prep_ref_submit.sh reference.fasta 
+`sbatch rsem_prep_ref_submit.sbatch reference.fasta 
 [--gff3/--gtf/--transcript-to-gene-map/--...] 
 reference.(gff3/gtf/txt/...)`
 
