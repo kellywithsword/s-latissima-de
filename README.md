@@ -16,9 +16,9 @@ a compatible samples file:
 
 `ls *fastq* | sed 's/_R[12].*//g' | sort -u > samples_file.txt`
 
-### 2. Prepare reference for RSEM
+## 2. Prepare reference for RSEM
  
 `sbatch rsem_prep_ref_submit.sh reference.fasta 
-[--gff3/--gtf/--transcript-to-gene-map/--... 
+[--gff3/--gtf/--transcript-to-gene-map/--...] 
 reference.(gff3/gtf/txt/...)`
 
