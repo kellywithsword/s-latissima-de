@@ -2,11 +2,12 @@
 #SBATCH -p cegs
 #SBATCH --mem=20gb
 #SBATCH --time=03:00:00
+#SBATCH -o rsem_prep_ref.out
 
 # Help message
 if [[ $1 = "-h" ]] || [[ $1 = "--help" ]] \
 || [[ -z $1 ]]; then
-  printf "Usage: sbatch rsem_prep_ref_submit.sh \
+  printf "Usage: sbatch rsem_prep_ref_submit.sbatch \
 reference.fa \
 [--gff3/--gtf/--transcript-to-gene-map/--... \
 reference.(gff3/gtf/txt/...)]\n\n\

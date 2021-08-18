@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -p cegs
 #SBATCH --mem=30gb
-#SBATCH --time=30:00:00
+#SBATCH --time=6-0
 #SBATCH -c 12
 
 source activate rsem
