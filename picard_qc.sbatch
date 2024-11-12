@@ -6,7 +6,8 @@
 
 reference=$1
 bam=$2
-bam_base=`sed 's/\..*//g' $bam`
+bam_base="$(echo "$bam" | sed 's/\..*//g')"
 
-picard CollectMultipleMetrics -I $bam -R $reference -O ${bam_basename}.picard_metrics
+
+picard CollectMultipleMetrics -I "$bam" -R "$reference" -O "${bam_base}".picard_metrics
 
